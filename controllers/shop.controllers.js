@@ -49,9 +49,13 @@ export const getShopByCity=async (req,res) => {
         const shops=await Shop.find({
             city:{$regex:new RegExp(`^${city}$`, "i")}
         }).populate('items')
-        if(!shops){
-            return res.status(400).json({message:"shops not found"})
-        }
+       if(!city || city === "null"){
+    return res.status(400).json({message:"city is required"})
+}
+
+if(shops.length === 0){
+    return res.status(200).json([]) // return empty instead of error
+}
         return res.status(200).json(shops)
     } catch (error) {
         return res.status(500).json({message:`get shop by city error ${error}`})
