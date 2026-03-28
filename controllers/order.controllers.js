@@ -7,11 +7,16 @@ import RazorPay from "razorpay"
 import dotenv from "dotenv"
 import { count } from "console"
 
+
 dotenv.config()
-let instance = new RazorPay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+let instance = null;
+
+if (process.env.RAZORPAY_KEY_ID) {
+    instance = new RazorPay({
+        key_id: process.env.RAZORPAY_KEY_ID,
+        key_secret: process.env.RAZORPAY_KEY_SECRET,
+    });
+}
 
 export const placeOrder = async (req, res) => {
     try {
